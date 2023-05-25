@@ -1,0 +1,62 @@
+﻿@model Floor_Location.Models.ExcelMapVM
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div id="pageContainer">
+    <br />
+    <div id="addRowContainer">
+    <button style="margin-right: 1.5em; background-color: dodgerblue;" onclick="addNewExcelValues()">Add New Row</button>
+    <input id="locationName" placeholder="Enter new Location Name" type="text"/>
+    <input id="locationID" placeholder="Enter new Location ID" type="text" />
+    <input id="isClearance" placeholder="Enter Is Clearance" type="text" />
+    </div>
+    <br />
+    <hr />
+    <table>
+        <thead>
+            <tr>
+                <th>Location Name</th>
+                <th>Location ID</th>
+                <th>IS CLEARANCE</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 1;}
+            @foreach (var item in Model.excelMapDM)
+            {
+            <tr>
+                <td>@item.LOCATION_NAME</td>
+                <td>@item.LOCATION_ID</td>
+                <td>@item.IS_CLEARANCE</td>           
+                <td><button onclick="UpdateExcelValues(@i)">Update</button></td>
+                <td><button>Delete</button></td>
+            </tr>
+                {i++;}
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script type="text/javascript">
+
+    function addNewExcelValues() {
+        window.location = '@Url.Action("AddExcelValue", "Home")?Location_name=' + document.getElementById("locationName").value + '&Location_ID=' + document.getElementById("locationID").value + '&Is_clearance=' + document.getElementById("isClearance").value;
+ }
+
+    function UpdateExcelValues(i) {
+        window.location = '@Url.Action("AddExcelValue", "Home")?rowIndex=' + i + 'Location_name=' + document.getElementById("locationName").value + '&Location_ID=' + document.getElementById("locationID").value + '&Is_clearance=' + document.getElementById("isClearance").value;
+    }
+
+
+</script>
