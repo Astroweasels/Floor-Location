@@ -7,7 +7,6 @@ namespace Floor_Location
     public class ExcelAccess
     {
         private string filePath;
-        private string NewFilePath;
         private FileInfo file;
         public ExcelAccess()
         {
