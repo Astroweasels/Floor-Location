@@ -7,19 +7,23 @@ namespace Floor_Location
     public class ExcelAccess
     {
         private string filePath;
+        private string NewFilePath;
         private FileInfo file;
         public ExcelAccess()
         {
-            filePath = @"C:\Projects\FLOOR_LOCATION.xlsx";
+            //filePath = @"C:\Projects\Floor-Location\FLOOR_LOCATIONExcelTest.xlsx";
+            filePath = Directory.GetCurrentDirectory() + "\\FLOOR_LOCATION.xlsx";
             file = new FileInfo(filePath);
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
 
         public List<ExcelMapDM> ExcelList()
         {
-
+            
             using (ExcelPackage package = new ExcelPackage(filePath))
             {
+                //package.Workbook.Worksheets["WMS Location Floor Location"].Dispose();
+
                 ExcelWorksheet worksheet = package.Workbook.Worksheets["WMS Location Floor Location"];
 
                 int rows = worksheet.Dimension.Rows;
@@ -28,7 +32,7 @@ namespace Floor_Location
                 //int locationIndex = -1;
                 //int locationIDIndex = -1;
                 //int isClearanceIndex = -1;
-                for (int row =2; row < rows; row++)
+                for (int row =2; row <= rows; row++)
                 {
 
                         ExcelMapDM cellvalue = new ExcelMapDM();
@@ -57,6 +61,7 @@ namespace Floor_Location
                 worksheet.Cells[targetRow, 2].Value = Location_ID;
                 worksheet.Cells[targetRow, 3].Value = Is_clearance;
                 package.Save();
+                worksheet.Dispose();
 
             }
         }
@@ -77,12 +82,21 @@ namespace Floor_Location
 
             }
         }
+
         #endregion
 
         #region Delete
-        public void DeleteExcelValue()
+        public void DeleteExcelRow(int rowIndex)
         {
+                using (ExcelPackage package = new ExcelPackage(filePath))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets["WMS Location Floor Location"];
 
+                worksheet.DeleteRow(rowIndex);
+                package.Save();
+                
+
+            }
         }
         #endregion
     }

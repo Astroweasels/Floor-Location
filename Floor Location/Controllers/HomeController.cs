@@ -28,13 +28,25 @@ namespace Floor_Location.Controllers
 
             return View(model);
         }
-        public void AddExcelValue(string Location_name, string Location_ID, string Is_clearance)
+        public IActionResult AddExcelValue(string Location_name, string Location_ID, string Is_clearance)
         {
             _exMap.AddExcelValue(Location_name, Location_ID, Is_clearance);
+
+            return RedirectToAction("Index");
         }
-        public void UpdateExcelValue(int rowIndex, string Location_name, string Location_ID, string Is_clearance)
+        public IActionResult UpdateExcelValue(int rowIndex, string Location_name, string Location_ID, string Is_clearance)
         {
-            _exMap.UpdateExcelValue(rowIndex, Location_name, Location_ID, Is_clearance);
+            int adjustedIndex = rowIndex + 1;
+            _exMap.UpdateExcelValue(adjustedIndex, Location_name, Location_ID, Is_clearance);
+
+            return RedirectToAction("Index");
+        }
+        public IActionResult DeleteExcelRow(int rowIndex)
+        {
+            int adjustedIndex = rowIndex + 1;
+            _exMap.DeleteExcelRow(adjustedIndex);
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

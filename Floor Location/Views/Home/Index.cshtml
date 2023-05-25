@@ -2,10 +2,23 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<div id="pageContainer">
+<div id="UpdateExcelRow" style=" position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(0,0,0, 0.8); z-index: 2;" hidden>
+        <div style="position: absolute; width: 800px; height: fit-content; top: 50px; left: 26%; text-align: center; background: white; word-wrap: break-word;">
+            <h3 id="textInput" style="margin-bottom: 1.5rem;">Please enter a value in all 3 selections and hit submit to continue!</h3>
+            <input id="locationNamePopUpVal" placeholder="Enter new Location Name" type="text"/>
+            <input id="locationIDPopUpVal" placeholder="Enter new Location ID" type="text" />
+            <input id="isClearancePopUpVal" placeholder="Enter Is Clearance" type="text" />
+            <br />
+            <br />
+            <button type="button" value="SubmitButton" onclick="" id="Submit" class="btn btn-primary" style="background-color: limegreen; margin-right: 1em;">Submit</button>
+            <button type="button" id="cancel-request" onclick="HidePopupBox();" class="btn btn-danger"style="background-color: red;">Cancel</button>
+        </div>
+    </div>
+
+<div id="pageContainer" style="background-color: #d3cdcd;">
     <br />
     <div id="addRowContainer">
-    <button style="margin-right: 1.5em; background-color: dodgerblue;" onclick="addNewExcelValues()">Add New Row</button>
+    <button style="margin-right: 1.5em; background-color: darkorange;" onclick="addNewExcelValues()">Add New Row</button>
     <input id="locationName" placeholder="Enter new Location Name" type="text"/>
     <input id="locationID" placeholder="Enter new Location ID" type="text" />
     <input id="isClearance" placeholder="Enter Is Clearance" type="text" />
@@ -15,8 +28,8 @@
     <table>
         <thead>
             <tr>
-                <th>Location Name</th>
-                <th>Location ID</th>
+                <th>Location Name --</th>
+                <th>Location ID --</th>
                 <th>IS CLEARANCE</th>
                 <th></th>
                 <th></th>
@@ -30,8 +43,9 @@
                 <td>@item.LOCATION_NAME</td>
                 <td>@item.LOCATION_ID</td>
                 <td>@item.IS_CLEARANCE</td>           
-                <td><button onclick="UpdateExcelValues(@i)">Update</button></td>
-                <td><button>Delete</button></td>
+                @* <td><button onclick="UpdateExcelValues(@i)">Update</button></td> *@
+                <td><button onclick="ShowPopUp(@i)" style="background-color: #cfcfff;">Update</button></td>
+                <td><button onclick="DeleteExcelRow(@i)" style="background-color: #ff00008f;">Delete</button></td>
             </tr>
                 {i++;}
             }
@@ -55,7 +69,22 @@
  }
 
     function UpdateExcelValues(i) {
-        window.location = '@Url.Action("AddExcelValue", "Home")?rowIndex=' + i + 'Location_name=' + document.getElementById("locationName").value + '&Location_ID=' + document.getElementById("locationID").value + '&Is_clearance=' + document.getElementById("isClearance").value;
+        window.location = '@Url.Action("UpdateExcelValue", "Home")?rowIndex=' + i + '&Location_name=' + document.getElementById("locationNamePopUpVal").value + '&Location_ID=' + document.getElementById("locationIDPopUpVal").value + '&Is_clearance=' + document.getElementById("isClearancePopUpVal").value;
+    }
+
+    function DeleteExcelRow(i) {
+        window.location = '@Url.Action("DeleteExcelRow", "Home")?rowIndex=' + i
+    }
+
+    function ShowPopUp(i){
+        var popUpBox = document.getElementById("UpdateExcelRow");
+        document.getElementById("Submit").onclick = function() { UpdateExcelValues(i); };
+        popUpBox.hidden = false;
+    }
+
+    function HidePopupBox() {
+        var popUpBox = document.getElementById("UpdateExcelRow");
+        popUpBox.hidden = true;
     }
 
 
