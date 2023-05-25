@@ -22,16 +22,13 @@ namespace Floor_Location
             
             using (ExcelPackage package = new ExcelPackage(filePath))
             {
-                //package.Workbook.Worksheets["WMS Location Floor Location"].Dispose();
-
+                
                 ExcelWorksheet worksheet = package.Workbook.Worksheets["WMS Location Floor Location"];
 
                 int rows = worksheet.Dimension.Rows;
                 int columns = worksheet.Dimension.Columns;
                 List<ExcelMapDM> cellValues = new List<ExcelMapDM>();
-                //int locationIndex = -1;
-                //int locationIDIndex = -1;
-                //int isClearanceIndex = -1;
+
                 for (int row =2; row <= rows; row++)
                 {
 

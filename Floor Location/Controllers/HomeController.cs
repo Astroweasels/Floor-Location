@@ -18,7 +18,7 @@ namespace Floor_Location.Controllers
         public IActionResult Index()
         {
             ExcelAccess excelMap = new ExcelAccess();
-            //List<ExcelMapDM> excelMapData = excelMap.ExcelList();
+            
             var excelList = excelMap.ExcelList();
 
             ExcelMapVM model = new ExcelMapVM()
