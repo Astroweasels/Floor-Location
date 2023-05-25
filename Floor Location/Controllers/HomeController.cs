@@ -30,16 +30,29 @@ namespace Floor_Location.Controllers
         }
         public IActionResult AddExcelValue(string Location_name, string Location_ID, string Is_clearance)
         {
-            _exMap.AddExcelValue(Location_name, Location_ID, Is_clearance);
-
-            return RedirectToAction("Index");
+            if (Location_name != null && Location_ID != null && Is_clearance != null)
+                {
+                    _exMap.AddExcelValue(Location_name, Location_ID, Is_clearance);
+                    return RedirectToAction("Index");
+                }
+            else
+                {
+                    return RedirectToAction("Index");
+                }    
         }
         public IActionResult UpdateExcelValue(int rowIndex, string Location_name, string Location_ID, string Is_clearance)
         {
             int adjustedIndex = rowIndex + 1;
-            _exMap.UpdateExcelValue(adjustedIndex, Location_name, Location_ID, Is_clearance);
 
-            return RedirectToAction("Index");
+             if (Location_name != null && Location_ID != null && Is_clearance != null)
+                {
+                    _exMap.UpdateExcelValue(adjustedIndex, Location_name, Location_ID, Is_clearance);
+                    return RedirectToAction("Index");
+                }
+            else
+                {
+                    return RedirectToAction("Index");
+                }           
         }
         public IActionResult DeleteExcelRow(int rowIndex)
         {

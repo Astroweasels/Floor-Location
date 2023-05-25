@@ -13,9 +13,21 @@
             <button type="button" value="SubmitButton" onclick="" id="Submit" class="btn btn-primary" style="background-color: limegreen; margin-right: 1em;">Submit</button>
             <button type="button" id="cancel-request" onclick="HidePopupBox();" class="btn btn-danger"style="background-color: red;">Cancel</button>
         </div>
-    </div>
+</div>
+
+<div id="DeleteExcelRow" style=" position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(0,0,0, 0.8); z-index: 2;" hidden>
+        <div style="position: absolute; width: 800px; height: fit-content; top: 50px; left: 26%; text-align: center; background: white; word-wrap: break-word;">
+            <h3 id="textInput" style="margin-bottom: 1.5rem;">Submitting will delete the whole row. If you want to change a value click update instead!</h3>
+            <br />
+            <br />
+            <button type="button" value="SubmitButton" onclick="" id="SubmitDelete" class="btn btn-primary" style="background-color: limegreen; margin-right: 1em;">Submit</button>
+            <button type="button" id="cancel-request" onclick="HidePopupBoxDelete();" class="btn btn-danger"style="background-color: red;">Cancel</button>
+        </div>
+</div>
 
 <div id="pageContainer" style="background-color: #d3cdcd;">
+    <h1>Excel Editor</h1>
+    <h3 style="color: rgb(0, 89, 255);"><u>Adding and updating rows will only take effect when all requested values are filled in!</u></h3>
     <br />
     <div id="addRowContainer">
     <button style="margin-right: 1.5em; background-color: darkorange;" onclick="addNewExcelValues()">Add New Row</button>
@@ -45,7 +57,7 @@
                 <td>@item.IS_CLEARANCE</td>           
                 @* <td><button onclick="UpdateExcelValues(@i)">Update</button></td> *@
                 <td><button onclick="ShowPopUp(@i)" style="background-color: #cfcfff;">Update</button></td>
-                <td><button onclick="DeleteExcelRow(@i)" style="background-color: #ff00008f;">Delete</button></td>
+                <td><button onclick="ShowPopUpDelete(@i)" style="background-color: #ff00008f;">Delete</button></td>
             </tr>
                 {i++;}
             }
@@ -84,6 +96,17 @@
 
     function HidePopupBox() {
         var popUpBox = document.getElementById("UpdateExcelRow");
+        popUpBox.hidden = true;
+    }
+
+    function ShowPopUpDelete(i){
+        var popUpBox = document.getElementById("DeleteExcelRow");
+        document.getElementById("SubmitDelete").onclick = function() { DeleteExcelRow(i); };
+        popUpBox.hidden = false;
+    }
+
+    function HidePopupBoxDelete() {
+        var popUpBox = document.getElementById("DeleteExcelRow");
         popUpBox.hidden = true;
     }
 
